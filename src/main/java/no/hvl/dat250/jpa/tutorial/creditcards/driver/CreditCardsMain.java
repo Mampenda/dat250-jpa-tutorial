@@ -6,7 +6,6 @@ import jakarta.persistence.Persistence;
 import no.hvl.dat250.jpa.tutorial.creditcards.*;
 
 import java.util.Collection;
-import java.util.List;
 
 public class CreditCardsMain {
 
@@ -35,6 +34,10 @@ public class CreditCardsMain {
     Address address = new Address();
     address.setStreet("Inndalsveien");
     address.setNumber(28);
+
+    // Get list of residents at the address and add customer
+    Collection<Customer> residents = address.getOwners();
+    residents.add(customer);
 
     // Add address to list of addresses
     customerAdresses.add(address);
@@ -67,5 +70,9 @@ public class CreditCardsMain {
     creditcard2.setPincode(pincode);
     creditcard2.setCardOwner(customer);
     creditcard2.setOwningBank(bank);
+
+    // Get list of credit cards at address and add the two credit cards
+    Collection<CreditCard> creditCards = address.getCreditCards();
+    creditCards.add(creditcard1);
   }
 }

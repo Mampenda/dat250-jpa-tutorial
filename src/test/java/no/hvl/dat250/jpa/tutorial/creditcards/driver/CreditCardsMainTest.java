@@ -1,18 +1,14 @@
 package no.hvl.dat250.jpa.tutorial.creditcards.driver;
 
-import jakarta.persistence.Query;
 import no.hvl.dat250.jpa.tutorial.creditcards.*;
 
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import no.hvl.dat250.jpa.tutorial.relationshipexample.Family;
-import no.hvl.dat250.jpa.tutorial.relationshipexample.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,30 +22,6 @@ public class CreditCardsMainTest {
     @BeforeEach
     public void setUp() {
         factory = Persistence.createEntityManagerFactory(CreditCardsMain.PERSISTENCE_UNIT_NAME);
-        EntityManager em = factory.createEntityManager();
-
-        // Begin a new local transaction so that we can persist a new entity
-        em.getTransaction().begin();
-
-        // Read the existing entries
-        Query q = em.createQuery("select m from Customer m");
-        // Customer should be empty
-
-        // Do we have any entries?
-        boolean createNewEntries = (q.getResultList().size() == 0);
-
-        // No, so let's create new entries
-        if (createNewEntries) {
-            assertEquals(0, q.getResultList().size());
-            Customer customer = new Customer();
-            customer.setName("Kari Nordmann");
-            em.persist(customer);
-        }
-        // Commit the transaction, which will cause the entity to be stored in the database
-        em.getTransaction().commit();
-
-        // It is always good practice to close the EntityManager so that resources are conserved.
-        em.close();
     }
 
     @Test

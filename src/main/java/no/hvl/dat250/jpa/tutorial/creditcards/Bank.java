@@ -10,6 +10,8 @@ public class Bank {
     private Long id;
     private String name;
 
+    @OneToMany(mappedBy = "bank")
+    Collection<CreditCard> cards;
 
 
     // Getters and Setters
@@ -22,7 +24,6 @@ public class Bank {
     public void setName(String name) { this.name = name; }
 
     public Collection<CreditCard> getOwnedCards() {
-        // TODO: implement method!
         return null;
     }
 }

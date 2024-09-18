@@ -19,6 +19,7 @@ public class Address {
     @OneToMany
     private Collection<CreditCard> creditCards;
 
+
     //Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
