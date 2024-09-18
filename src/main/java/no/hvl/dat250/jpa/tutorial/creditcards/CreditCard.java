@@ -6,39 +6,43 @@ import java.util.List;
 
 @Entity
 public class CreditCard {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer number;
+    private Integer balance;
+    private Integer creditLimit;
 
+    @ManyToOne
+    private Pincode pincode;
 
-//    @ManyToOne(mappedBy = "creditcards")
-//    private Customer cardOwner;
+    @ManyToOne
+    private Bank bank;
 
-    public Integer getNumber() {
-        // TODO: implement method!
-        return null;
-    }
+    @ManyToOne
+    private Customer cardOwner;
 
-    public Integer getBalance() {
-        // TODO: implement method!
-        return null;
-    }
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Integer getCreditLimit() {
-        // TODO: implement method!
-        return null;
-    }
+    public Integer getNumber() { return number; }
+    public void setNumber(Integer number) { this.number = number; }
 
-    public Pincode getPincode() {
-        // TODO: implement method!
-        return null;
-    }
+    public Integer getBalance() { return balance; }
+    public void setBalance(Integer balance) { this.balance = balance; }
 
-    public Bank getOwningBank() {
-        // TODO: implement method!
-        return null;
-    }
+    public Integer getCreditLimit() { return creditLimit; }
+    public void setCreditLimit(Integer creditLimit) { this.creditLimit = creditLimit; }
+
+    public Pincode getPincode() { return pincode; }
+
+    public void setPincode(Pincode pincode) { this.pincode = pincode; }
+
+    public Bank getOwningBank() { return bank; }
+    public void setOwningBank(Bank bank) { this.bank = bank; }
+
+    public Customer getCardOwner() { return cardOwner; }
+    public void setCardOwner(Customer cardOwner) { this.cardOwner = cardOwner; }
 }
