@@ -1,8 +1,6 @@
 package no.hvl.dat250.jpa.tutorial.creditcards;
 
 import java.util.Collection;
-import java.util.List;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -14,7 +12,7 @@ public class Customer {
     private String name;
 
     @OneToMany(mappedBy = "cardOwner")
-    private Collection<CreditCard> creditCards;
+    private Collection<CreditCard> creditCard;
 
     @ManyToMany(mappedBy = "residents")
     private Collection<Address> addressList;
@@ -27,8 +25,8 @@ public class Customer {
     public void setName(String name) { this.name = name; }
 
     public Collection<Address> getAddresses() { return addressList; }
-    public void setAddresses(Collection<Address> adressList) { this.addressList = adressList; }
+    public void setAddresses(Collection<Address> addressList) { this.addressList = addressList; }
 
-    public Collection<CreditCard> getCreditCards() { return creditCards; }
-    public void setCreditCards(Collection<CreditCard> cards) { this.creditCards = cards; }
+    public Collection<CreditCard> getCreditCards() { return creditCard; }
+    public void setCreditCards(Collection<CreditCard> creditCard) { this.creditCard = creditCard; }
 }

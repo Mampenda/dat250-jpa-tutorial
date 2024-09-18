@@ -2,7 +2,6 @@ package no.hvl.dat250.jpa.tutorial.creditcards;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
 public class CreditCard {
@@ -37,7 +36,6 @@ public class CreditCard {
     public void setCreditLimit(Integer creditLimit) { this.creditLimit = creditLimit; }
 
     public Pincode getPincode() { return pincode; }
-
     public void setPincode(Pincode pincode) { this.pincode = pincode; }
 
     public Bank getOwningBank() { return bank; }

@@ -24,11 +24,11 @@ public class JpaTest {
         // Begin a new local transaction so that we can persist a new entity
         em.getTransaction().begin();
 
-        // read the existing entries
+        // Read the existing entries
         Query q = em.createQuery("select m from Person m");
         // Persons should be empty
 
-        // do we have entries?
+        // Do we have entries?
         boolean createNewEntries = (q.getResultList().size() == 0);
 
         // No, so let's create new entries
@@ -49,14 +49,11 @@ public class JpaTest {
             }
         }
 
-        // Commit the transaction, which will cause the entity to
-        // be stored in the database
+        // Commit the transaction, which will cause the entity to be stored in the database
         em.getTransaction().commit();
 
-        // It is always good practice to close the EntityManager so that
-        // resources are conserved.
+        // It is always good practice to close the EntityManager so that resources are conserved.
         em.close();
-
     }
 
     @Test

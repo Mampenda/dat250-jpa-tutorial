@@ -8,9 +8,9 @@ public class Pincode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer pincode;
-    private String code;
+    private String pincode;
     private Integer count;
+
 
     //Getters and Setters
     public Long getId() {
@@ -18,13 +18,9 @@ public class Pincode {
     }
     public void setId(Long id) { this.id = id; }
 
-    public Pincode getPincode() { return this; }
-//    public void setPincode(Integer pincode) { this.pincode = pincode; }
-
-    public String getCode() { return code; }
-    public void setCode(String code) { this.code = code; }
+    public String getCode() { return pincode; }
+    public void setCode(String pincode) { this.pincode = pincode; }
 
     public Integer getCount() { return count; }
     public void setCount(Integer count) { this.count = count; }
-
 }

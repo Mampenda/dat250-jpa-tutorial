@@ -219,6 +219,9 @@ The `setUp()` method will create a few test entries. After the test entries are 
 
 - Where do the getters/setters used in the `setUp()` method come from?
 
+#### *ANSWER:* _Test entries are created using the getters and setters that I have implemented in the Family-, Person-, and Job-class._
+
+
 6. The **final project** should look like this:
 
 ![Project overview](./structure.png)
