@@ -17,7 +17,7 @@ public class CreditCard {
     private Pincode pincode;
 
     @ManyToOne
-    private Bank bank;
+    private Bank owningBank;
 
     @ManyToOne
     private Customer cardOwner;
@@ -25,7 +25,6 @@ public class CreditCard {
 
     // Getters and Setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
     public Integer getNumber() { return number; }
     public void setNumber(Integer number) { this.number = number; }
@@ -39,9 +38,9 @@ public class CreditCard {
     public Pincode getPincode() { return pincode; }
     public void setPincode(Pincode pincode) { this.pincode = pincode; }
 
-    public Bank getOwningBank() { return bank; }
-    public void setOwningBank(Bank bank) { this.bank = bank; }
+    public Bank getOwningBank() { return owningBank; }
+    public void setOwningBank(Bank bank) { this.owningBank = bank; }
 
     public Customer getCardOwner() { return cardOwner; }
-    public void setCardOwner(Customer cardOwner) { this.cardOwner = cardOwner; }
+    public void setCardOwner(Customer customer) { this.cardOwner = customer; }
 }

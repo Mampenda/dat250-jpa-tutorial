@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -18,7 +20,7 @@ public class Family {
     private String description;
 
     @OneToMany(mappedBy = "family")
-    private final List<Person> members = new ArrayList<>();
+    private final Collection<Person> members = new HashSet<>();
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -27,7 +29,7 @@ public class Family {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public List<Person> getMembers() { return members; }
-    public void setMembers(List<Person> members) { this.members.clear(); }
+    public Collection<Person> getMembers() { return members; }
+    public void setMembers(Person member) { members.add(member); }
 
 }

@@ -21,26 +21,19 @@ public class CreditCardsMain {
   }
 
   private static void createObjects(EntityManager em) {
-    // TODO: Create object world as shown in the README.md.
 
-    // Create customer and initialize name
+    // Create customer
     Customer customer = new Customer();
     customer.setName("Max Mustermann");
-
-    // Get collection of addresses from customer
-    Collection<Address> customerAdresses = customer.getAddresses();
 
     // Create address
     Address address = new Address();
     address.setStreet("Inndalsveien");
     address.setNumber(28);
+    address.setOwners(customer);
 
-    // Get list of residents at the address and add customer
-    Collection<Customer> residents = address.getOwners();
-    residents.add(customer);
-
-    // Add address to list of addresses
-    customerAdresses.add(address);
+    // Add address to customers list of addresses
+    customer.setAddresses(address);
 
     // Create new bank and implement fields
     Bank bank = new Bank();
@@ -71,8 +64,20 @@ public class CreditCardsMain {
     creditcard2.setCardOwner(customer);
     creditcard2.setOwningBank(bank);
 
-    // Get list of credit cards at address and add the two credit cards
-    Collection<CreditCard> creditCards = address.getCreditCards();
-    creditCards.add(creditcard1);
+    // Add credit cards to banks list of cards
+    bank.setOwnedCards(creditcard1);
+    bank.setOwnedCards(creditcard2);
+
+    // Add credit cards to customers list of cards
+    customer.setCreditCards(creditcard1);
+    customer.setCreditCards(creditcard2);
+
+    // Persist the objects
+    em.persist(customer);
+    em.persist(address);
+    em.persist(pincode);
+    em.persist(creditcard1);
+    em.persist(creditcard2);
+    em.persist(bank);
   }
 }

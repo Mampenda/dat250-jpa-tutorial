@@ -22,3 +22,16 @@ The string `"com.h2database:h2:2.2.220"` inside `implementation()` indicates tha
 4. I am used to using MySQL Workbench to inspect the tables, so if they look anything like the ones in MySQL workbench, then no. 
 
 
+I had some trouble getting the last test to pass, the main error I got was 
+ 
+```
+java.lang.NullPointerException: Cannot invoke "java.util.Collection.add(Object)" because "customerAdresses" is null
+	at no.hvl.dat250.jpa.tutorial.creditcards.driver.CreditCardsMain.createObjects(CreditCardsMain.java:39)
+	at no.hvl.dat250.jpa.tutorial.creditcards.driver.CreditCardsMain.main(CreditCardsMain.java:18)
+	at no.hvl.dat250.jpa.tutorial.creditcards.driver.CreditCardsMainTest.testDomainModelPersistence(CreditCardsMainTest.java:31)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+```
+
+I figured I had implemented the CreditCardMain-class incorrectly. 
