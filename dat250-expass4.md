@@ -34,8 +34,8 @@ java.lang.NullPointerException: Cannot invoke "java.util.Collection.add(Object)"
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 ```
 
-I figured I had implemented the classes wrongly by not initializing the Collections as new HashSets. So after I implemented them correctly I got a new error AssertionFailedError: 
-
+I figured I had implemented the classes wrongly by not initializing the Collections as new HashSets. 
+After I implemented them correctly I got a new error AssertionFailedError:
 ```
 org.opentest4j.AssertionFailedError: expected: org.hibernate.collection.spi.PersistentBag@681d704e<[no.hvl.dat250.jpa.tutorial.creditcards.Customer@71262020]> but was: java.util.ImmutableCollections$Set12@39f93225<[no.hvl.dat250.jpa.tutorial.creditcards.Customer@71262020]>
 	at app//org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
@@ -49,5 +49,4 @@ org.opentest4j.AssertionFailedError: expected: org.hibernate.collection.spi.Pers
 	at java.base@21.0.4/java.util.ArrayList.forEach(ArrayList.java:1596)
 	at java.base@21.0.4/java.util.ArrayList.forEach(ArrayList.java:1596)
 ```
-
 When I changed the types from `Collection` to `Set`, all the tests passed. 
