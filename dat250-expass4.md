@@ -34,4 +34,20 @@ java.lang.NullPointerException: Cannot invoke "java.util.Collection.add(Object)"
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 ```
 
-I figured I had implemented the CreditCardMain-class incorrectly. 
+I figured I had implemented the classes wrongly by not initializing the Collections as new HashSets. So after I implemented them correctly I got a new error AssertionFailedError: 
+
+```
+org.opentest4j.AssertionFailedError: expected: org.hibernate.collection.spi.PersistentBag@681d704e<[no.hvl.dat250.jpa.tutorial.creditcards.Customer@71262020]> but was: java.util.ImmutableCollections$Set12@39f93225<[no.hvl.dat250.jpa.tutorial.creditcards.Customer@71262020]>
+	at app//org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at app//org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at app//org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)
+	at app//no.hvl.dat250.jpa.tutorial.creditcards.driver.CreditCardsMainTest.testDomainModelPersistence(CreditCardsMainTest.java:47)
+	at java.base@21.0.4/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base@21.0.4/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base@21.0.4/java.util.ArrayList.forEach(ArrayList.java:1596)
+```
+
+When I changed the types from `Collection` to `Set`, all the tests passed. 

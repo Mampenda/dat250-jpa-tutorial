@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Bank {
@@ -13,7 +14,7 @@ public class Bank {
     private String name;
 
     @OneToMany(mappedBy = "owningBank")
-    private Collection<CreditCard> creditCards = new HashSet<>();
+    private Set<CreditCard> creditCards = new HashSet<>();
 
 
     // Getters and Setters
@@ -24,6 +25,6 @@ public class Bank {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public Collection<CreditCard> getOwnedCards() { return creditCards; }
+    public Set<CreditCard> getOwnedCards() { return creditCards; }
     public void setOwnedCards(CreditCard creditCard) { creditCards.add(creditCard); }
 }

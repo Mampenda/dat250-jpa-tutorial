@@ -1,7 +1,7 @@
 package no.hvl.dat250.jpa.tutorial.creditcards;
 
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -15,7 +15,7 @@ public class Address {
     private Integer number;
 
     @ManyToMany
-    private Collection<Customer> owners = new HashSet<>();
+    private Set<Customer> owners = new HashSet<>();
 
 
     //Getters and Setters
@@ -27,6 +27,6 @@ public class Address {
     public Integer getNumber() { return number; }
     public void setNumber(Integer number) { this.number = number; }
 
-    public Collection<Customer> getOwners() { return owners; }
+    public Set<Customer> getOwners() { return owners; }
     public void setOwners( Customer customer) { owners.add(customer); }
 }
