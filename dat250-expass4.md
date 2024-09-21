@@ -19,7 +19,11 @@ runtime classpath, as opposed to `compile()` which is included in both the compi
 The string `"com.h2database:h2:2.2.220"` inside `implementation()` indicates that an _H2_ database is being used.
 2. SQL used to create the table Customer: `CREATE TABLE Customer`.
 3. MySQL can be used to inspect the tables being used and also to create schemas
-4. I am used to using MySQL Workbench to inspect the tables, so if they look anything like the ones in MySQL workbench, then no. 
+4. When running the test I get the following tables in the database: 
+
+![img_1.png](img_1.png)
+
+I had expected there to be a table for each class, but I did not expect there to be so many tables for the classes that point to each other.
 
 
 I had some trouble getting the last test to pass, the main error I got was 
