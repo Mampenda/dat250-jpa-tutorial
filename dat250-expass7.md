@@ -26,7 +26,7 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 ```
 By default, PostgreSQL uses port 5432, so I mapped the port on both host and container with the argument `-p 5432:5432`,
-and set the username and password with the environmental argument `-e`.
+and set the username, password, and database with the environmental argument `-e`.
 
 ```
 $ docker run -p 5432:5432 -e POSTGRES_USER=myusername -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydatabase -d --name my-postgres --rm postgres postgres
@@ -57,8 +57,7 @@ psql: FATAL: role "postgres" does not exist
 psql: FATAL: role "my-username" does not exist
 psql: FATAL: role "user" does not exist
 ```
-
-So, I deleted the container and tried again:
+So, I deleted the container and tried again with:
 ```
 $ docker run -p 5432:5432 -d --name my-postgres --rm postgres postgres
 32e0e9dcd8d4fbafe9b4493bc64df5f6afc6c77d820b71e0d3e61eb1081d175e
@@ -71,7 +70,7 @@ $ winpty docker exec -it my-postgres bash
 root@73261b55aedb:/# psql -U postgres
 psql (17.0 (Debian 17.0-1.pgdg120+1))
 Type "help" for help.
- 
+
 postgres=# create user myusername with password 'mypassword';
 CREATE ROLE
 postgres=#  create user jpa_client with password 'secret';
@@ -95,7 +94,6 @@ postgres=# \du
  myusername | 
  postgres   | Superuser, Create role, Create DB, Replication, Bypass RLS
 ```
-
 I checked the PostgreSQL version with the command:
 ```
 $ psql -U postgres postgres -c 'SELECT version()'
@@ -105,7 +103,7 @@ Password for user postgres:
  PostgreSQL 17.0 on x86_64-windows, compiled by msvc-19.41.34120, 64-bit
 (1 row)
 ```
-
+Since, I could not see "mydatabase" listed among the databases I tried to create it through the terminal:
 ```
 postgres=# create database test;
 CREATE DATABASE
@@ -126,7 +124,7 @@ You are now connected to database "test" as user "postgres".
 test=# \d
 Did not find any relations.
 ```
-I opened another gitBash terminal and ran the command (password: 1234)
+I opened another gitBash terminal and tried to connect to postgres again to create another database (password: 1234)
 ```
 $ psql -h localhost -p 5432 -U postgres
 Password for user postgres:
@@ -134,20 +132,16 @@ psql (17.0)
 Type "help" for help.
 postgres=# create database test2;
 CREATE DATABASE
-postgres=# \c test
-You are now connected to database "test" as user "postgres".
+postgres=# \c test2
+You are now connected to database "test2" as user "postgres".
 ```
-
----
-
-My new databases kept disappearing from Docker when I tried to use them as source in IntelliJ, so I removed everything
-and tried again. 
-
+The new databases kept disappearing from Docker when I tried to use them as source in IntelliJ, so I removed everything
+and tried again.
 ```
 $ docker run -p 5432:5432 -e POSTGRES_USER=myusername 
-                        -e POSTGRES_PASSWORD=mypassword 
-                        -e POSTGRES_DB=mydatabase 
-                        -d --name my-postgres --rm postgres postgres
+                          -e POSTGRES_PASSWORD=mypassword 
+                          -e POSTGRES_DB=mydatabase 
+                          -d --name my-postgres --rm postgres postgres
 9a9ca3bbc69afe495ce7b91d621af41ef2fda21d9ec8d195dfe1c09219a09b37
 $ docker ps
 CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS          PORTS                    NAMES
@@ -210,8 +204,8 @@ PostgreSQL init process complete; ready for start up.
 2024-10-11 08:38:58.997 UTC [65] LOG:  database system was shut down at 2024-10-11 08:38:58 UTC
 2024-10-11 08:38:59.020 UTC [1] LOG:  database system is ready to accept connections
 ```
-
-I could see the container in my `Docker Desktop`, but not the database. So, I tried logging into my database from root:
+I could see the container in my `Docker Desktop`, but not the database. So, I tried logging into my database from root
+again, but I kept getting an error message saying that the database or the role did not exist:
 ```
 $ docker exec -it my-postgres bash
 root@9a9ca3bbc69a:/# psql -U myusername
@@ -221,7 +215,8 @@ psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" 
 root@9a9ca3bbc69a:/# exit
 exit
 ```
-That did not work, so I tried logging into my database from gitBash terminal:
+Since I could not figure out why I got this error, I tried logging into the automatically generated database "postgres" 
+which I saw was listed:
 ```
 $ psql -U postgres
 Password for user postgres: 
@@ -235,9 +230,7 @@ postgres=# \du
  postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS
 
 ```
-
-The user I created (myusername) has not been created, and I do not know why, but I added the user for the jpa_client. 
-
+The user I created (myusername) has not been created, and I do not know why, but I added the user for the jpa_client.
 ```
 postgres=# CREATE USER jpa_client WITH PASSWORD 'secret'; 
 CREATE ROLE
@@ -247,8 +240,9 @@ postgres=# \du
 ------------+------------------------------------------------------------
  jpa_client |
  postgres   | Superuser, Create role, Create DB, Replication, Bypass RLS
-
-
+```
+I also added attributes:
+```
 postgres=# alter role jpa_client createrole createdb replication bypassrls;  
 ALTER ROLE
 postgres=# -\du
@@ -259,7 +253,6 @@ postgres=# -\du
  postgres   | Superuser, Create role, Create DB, Replication, Bypass RLS
 
 ```
-
 I cleaned gradle, re-built it, and ran the tests without error: 
 ```
 amali@MampendaPC MINGW64 ~/IdeaProjects/DAT250/dat250-jpa-tutorial (ex7)                                                                                                            
@@ -281,7 +274,7 @@ $ ./gradlew test
 BUILD SUCCESSFUL in 3s
 4 actionable tasks: 4 up-to-date
 ```
-
+Then I managed to connect to the database I had created and created a "jpa_client" user for that as well:
 ```
 $ docker exec -it my-postgres psql -U myusername -d mydatabase
 psql (17.0 (Debian 17.0-1.pgdg120+1))
@@ -291,18 +284,89 @@ mydatabase=# create user jpa_client with password 'secret';
 CREATE ROLE
 ```
 
-Tried to connect manually but intellij only finds "postgres" and I am not able to log into "mydatabase" with "myusername"
-and "mypassword".
+Tried to connect to the database through the IntelliJ client manually but again, IntelliJ could only find "postgres" 
+and not "my-database":
+"myusername" and "mypassword".
 ![img2.png](images/img2.png)
-![img.png](images/img3.png)
+![img3.png](images/img3.png)
 
+So I tried to list the databases again to check that it waa there, and it was not:
+```
+postgres=> \l
+                                                                    List of databases                                                                                                                                              
+   Name    |  Owner   | Encoding | Locale Provider |          Collate           |           Ctype            | Locale | ICU Rules |   Access privileges
+-----------+----------+----------+-----------------+----------------------------+----------------------------+--------+-----------+-----------------------
+ postgres  | postgres | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           |
+ template0 | postgres | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           | =c/postgres          +
+           |          |          |                 |                            |                            |        |           | postgres=CTc/postgres
+ template1 | postgres | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           | =c/postgres          +
+           |          |          |                 |                            |                            |        |           | postgres=CTc/postgres
+(3 rows)
+```
+Since the database was still not listed, I tried to create a new database from the postgres console:  
+```
+postgres=> create database myDB;
+CREATE DATABASE
+postgres=> \l
+                                                                     List of databases                                                                                                                                             
+   Name    |   Owner    | Encoding | Locale Provider |          Collate           |           Ctype            | Locale | ICU Rules |   Access privileges
+-----------+------------+----------+-----------------+----------------------------+----------------------------+--------+-----------+-----------------------
+ mydb      | jpa_client | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           |
+ postgres  | postgres   | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           |
+ template0 | postgres   | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           | =c/postgres          +
+           |            |          |                 |                            |                            |        |           | postgres=CTc/postgres
+ template1 | postgres   | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           | =c/postgres          +
+           |            |          |                 |                            |                            |        |           | postgres=CTc/postgres
+(4 rows)
+```
+And to add privileges:
+```
+postgres=> grant all priviliges on database mydb to jpa_client;
+                                                                       List of databases
+   Name    |   Owner    | Encoding | Locale Provider |          Collate           |           Ctype            | Locale | ICU Rules |     Access privileges
+-----------+------------+----------+-----------------+----------------------------+----------------------------+--------+-----------+---------------------------
+ mydb      | jpa_client | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           | =Tc/jpa_client           +
+           |            |          |                 |                            |                            |        |           | jpa_client=CTc/jpa_client
+ postgres  | postgres   | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           |
+ template0 | postgres   | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           | =c/postgres              +
+           |            |          |                 |                            |                            |        |           | postgres=CTc/postgres
+ template1 | postgres   | UTF8     | libc            | English_United States.1252 | English_United States.1252 |        |           | =c/postgres              +
+           |            |          |                 |                            |                            |        |           | postgres=CTc/postgres
 
+```
+And now I finally managed to connect the IntelliJ client 
 
+![img.png](img.png)
 
+Then I ran the SQL schema manually with the following command:
+```
+$ psql -U jpa_client -d mydb -a -f schema.up.sql
+Password for user jpa_client:
+```
+And the tables were finally showing up in the database!
 
-### Problems
+![img_1.png](img_1.png)
 
-- Did not manage to connect to the database from the IntelliJ client.
-- After modifying the `xml`file, the test do not pass.
-- Do not know where to store the `docker-entrypoint-initdb.d/` directory.
-- Do not know where to store the `docker-compose.yml` file.
+So I re-built the program with gradle and all the test passed. 
+```
+$ ./gradlew build
+
+BUILD SUCCESSFUL in 39s
+8 actionable tasks: 6 executed, 2 up-to-date
+```
+
+```
+$ ./gradlew test
+
+BUILD SUCCESSFUL in 5s
+4 actionable tasks: 4 up-to-date                                                                                                                                      
+```
+Lastly I pulled the temurin image with the docker command `docker pull eclipse-temurin` and created the Docker file. 
+I also did this in my front-and backend projects from the previous experiments.
+I created a separate project for my front-end so it does not have a main class, and therefore I did not manage to create
+a jar for it, but I created a Docker file nonetheless.
+
+Here is the link to my front- and back-end project:
+https://github.com/Mampenda/fullstack-backend
+https://github.com/Mampenda/fullstack-frontend
+
