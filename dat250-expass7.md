@@ -138,5 +138,8 @@ postgres=# \c test
 You are now connected to database "test" as user "postgres".
 ```
 
+---
+
 My new databases kept disappearing from Docker when I tried to use them as source in IntelliJ, so I removed everything
 and tried again. 
+
