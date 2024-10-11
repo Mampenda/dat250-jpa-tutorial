@@ -281,3 +281,15 @@ $ ./gradlew test
 BUILD SUCCESSFUL in 3s
 4 actionable tasks: 4 up-to-date
 ```
+
+Tried to connect manually 
+![img.png](images/img2.png)
+
+### Problems
+
+- The user "myusername" is not being created.
+- The db "mydatabase" is not being created.
+- After modifying the `xml`file, the test do not pass.
+- Do not know where to store the `docker-entrypoint-initdb.d/` directory.
+- Do not know where to store the `docker-compose.yml` file.
+- Did not manage to connect to the database from the IntelliJ client.
