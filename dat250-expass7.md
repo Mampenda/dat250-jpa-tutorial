@@ -336,7 +336,7 @@ postgres=> grant all priviliges on database mydb to jpa_client;
 ```
 And now I finally managed to connect the IntelliJ client 
 
-![img.png](img.png)
+![img.png](images/img4.png)
 
 Then I ran the SQL schema manually with the following command:
 ```
@@ -345,7 +345,7 @@ Password for user jpa_client:
 ```
 And the tables were finally showing up in the database!
 
-![img_1.png](img_1.png)
+![img_1.png](images/img5.png)
 
 So I re-built the program with gradle and all the test passed. 
 ```
