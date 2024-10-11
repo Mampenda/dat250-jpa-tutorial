@@ -282,14 +282,27 @@ BUILD SUCCESSFUL in 3s
 4 actionable tasks: 4 up-to-date
 ```
 
-Tried to connect manually 
-![img.png](images/img2.png)
+```
+$ docker exec -it my-postgres psql -U myusername -d mydatabase
+psql (17.0 (Debian 17.0-1.pgdg120+1))
+Type "help" for help.
+
+mydatabase=# create user jpa_client with password 'secret';
+CREATE ROLE
+```
+
+Tried to connect manually but intellij only finds "postgres" and I am not able to log into "mydatabase" with "myusername"
+and "mypassword".
+![img2.png](images/img2.png)
+![img.png](images/img3.png)
+
+
+
+
 
 ### Problems
 
-- The user "myusername" is not being created.
-- The db "mydatabase" is not being created.
+- Did not manage to connect to the database from the IntelliJ client.
 - After modifying the `xml`file, the test do not pass.
 - Do not know where to store the `docker-entrypoint-initdb.d/` directory.
 - Do not know where to store the `docker-compose.yml` file.
-- Did not manage to connect to the database from the IntelliJ client.

@@ -21,7 +21,7 @@ The string `"com.h2database:h2:2.2.220"` inside `implementation()` indicates tha
 3. MySQL can be used to inspect the tables being used and also to create schemas
 4. When running the test I get the following tables in the database: 
 
-![img_1.png](images/img_1.png)
+![img_1.png](images/img1.png)
 
 I had expected there to be a table for each class, but I did not expect there to be so many tables for the classes that point to each other.
 
