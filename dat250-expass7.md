@@ -236,4 +236,48 @@ postgres=# \du
 
 ```
 
-The user I created has not been created, and I do not know why. 
+The user I created (myusername) has not been created, and I do not know why, but I added the user for the jpa_client. 
+
+```
+postgres=# CREATE USER jpa_client WITH PASSWORD 'secret'; 
+CREATE ROLE
+postgres=# \du
+                              List of roles                                                                                                                                        
+ Role name  |                         Attributes
+------------+------------------------------------------------------------
+ jpa_client |
+ postgres   | Superuser, Create role, Create DB, Replication, Bypass RLS
+
+
+postgres=# alter role jpa_client createrole createdb replication bypassrls;  
+ALTER ROLE
+postgres=# -\du
+                              List of roles                                                                                                                                        
+ Role name  |                         Attributes
+------------+------------------------------------------------------------
+ jpa_client | Create role, Create DB, Replication, Bypass RLS
+ postgres   | Superuser, Create role, Create DB, Replication, Bypass RLS
+
+```
+
+I cleaned gradle, re-built it, and ran the tests without error: 
+```
+amali@MampendaPC MINGW64 ~/IdeaProjects/DAT250/dat250-jpa-tutorial (ex7)                                                                                                            
+$ ./gradlew clean
+Starting a Gradle Daemon, 3 stopped Daemons could not be reused, use --status for details
+
+BUILD SUCCESSFUL in 26s
+1 actionable task: 1 executed
+
+amali@MampendaPC MINGW64 ~/IdeaProjects/DAT250/dat250-jpa-tutorial (ex7)
+$ ./gradlew build
+
+BUILD SUCCESSFUL in 35s
+8 actionable tasks: 8 executed
+                                                                                                                                                                                    
+amali@MampendaPC MINGW64 ~/IdeaProjects/DAT250/dat250-jpa-tutorial (ex7)                                                                                                            
+$ ./gradlew test
+
+BUILD SUCCESSFUL in 3s
+4 actionable tasks: 4 up-to-date
+```
