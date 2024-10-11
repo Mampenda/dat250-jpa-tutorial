@@ -29,7 +29,6 @@ By default, PostgreSQL uses port 5432, so I mapped the port on both host and con
 and set the username and password with the environmental argument `-e`.
 
 ```
-amali@MampendaPC MINGW64 ~/IdeaProjects/DAT250/docker-intro/docker-intro (main)
 $ docker run -p 5432:5432 -e POSTGRES_USER=myusername -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydatabase -d --name my-postgres --rm postgres postgres
 dfbd112eca53a482da5d4b289cfa977dcc3a85e04a61142ba47381ce420d2857
 ```
@@ -49,7 +48,7 @@ I was unable to connect to the running Docker container, so I stopped and delete
 "Create container". A new window opened, prompting for me to input some values into the fields. So I filled it in
 accordingly:
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 This did not work either because I kept getting errors when trying to enter the container bash.
 
@@ -61,16 +60,13 @@ psql: FATAL: role "user" does not exist
 
 So, I deleted the container and tried again:
 ```
-amali@MampendaPC MINGW64 ~
 $ docker run -p 5432:5432 -d --name my-postgres --rm postgres postgres
 32e0e9dcd8d4fbafe9b4493bc64df5f6afc6c77d820b71e0d3e61eb1081d175e
 
-amali@MampendaPC MINGW64 ~
 $ docker ps
 CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS          PORTS                    NAMES
 32e0e9dcd8d4   postgres   "docker-entrypoint.s…"   21 seconds ago   Up 21 seconds   0.0.0.0:5432->5432/tcp   my-postgres
 
-amali@MampendaPC MINGW64 ~
 $ winpty docker exec -it my-postgres bash
 root@73261b55aedb:/# psql -U postgres
 psql (17.0 (Debian 17.0-1.pgdg120+1))
@@ -132,7 +128,6 @@ Did not find any relations.
 ```
 I opened another gitBash terminal and ran the command (password: 1234)
 ```
-amali@MampendaPC MINGW64 ~ 
 $ psql -h localhost -p 5432 -U postgres
 Password for user postgres:
 psql (17.0)
@@ -142,3 +137,6 @@ CREATE DATABASE
 postgres=# \c test
 You are now connected to database "test" as user "postgres".
 ```
+
+My new databases kept disappearing from Docker when I tried to use them as source in IntelliJ, so I removed everything
+and tried again. 
